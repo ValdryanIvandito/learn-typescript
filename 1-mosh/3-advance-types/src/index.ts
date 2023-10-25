@@ -1,66 +1,152 @@
-// With Annotate
-let sales: number = 123_456_789;
-let course: string = "Typescript";
-let is_published: boolean = true;
-
-// Without Annotate
-let _sales = 123_456_789;
-let _course = "Typescript";
-let _is_published = true;
-
-// Any Type
-let level;
-const message = (text: any) => {
-  console.log(text);
-};
-message("HelloWord!");
-
-// Array
-let numbers: number[] = [1, 2, 3];
-let _number: number[] = [];
-_number[0] = 1;
-_number[1] = 2;
-
-// Tuples
-// Notes: Tuples is useful when it has only two values
-let user: [number, string] = [1, "Mosh"];
-
-// Enum
-// Notes: Must uses PascalCase
-const enum Size {
-  SmallSize = "S",
-  MediumSize = "M",
-  LargeSize = "L",
-}
-let mySize: Size = Size.MediumSize;
-console.log(mySize);
-
-
-// Notes: In order to annotate at function we must activate noUnusedLocals, noUnusedParameters, and noImplicitReturns at tsconfig.json
-// Function Without Return Value
-const myIncome = (income: number): void => {
-  console.log(`My income is ${income}`);
-};
-// Function With Return Value
-const calculateTax = (income: number, taxyear = 2022): number => {
-  if (taxyear <= 2022) {
-    return income * 1.2;
-  } else {
-    return income * 1.3;
-  }
-};
-console.log("My tax is", calculateTax(10_000));
-console.log("My tax is", calculateTax(10_000, 2023));
-
-// Object
-let employee: {
+// Type Aliases //
+type Employee = {
   readonly id: number;
   name: string;
   retire: (date: Date) => void;
-} = {
+};
+
+let employee: Employee = {
   id: 1,
   name: "Mosh",
   retire: (date: Date) => {
     console.log(date);
   },
 };
+
+// Union Types //
+function kgToLbs(weight: number | string): number {
+  // Narrowing
+  if (typeof weight === "number") {
+    return weight * 2.2;
+  } else {
+    return parseInt(weight) * 2.2;
+  }
+}
+
+console.log(kgToLbs(10));
+console.log(kgToLbs("10kg"));
+
+// Intersection Types //
+// Example-1
+type _Person = {
+  name: string;
+  age: number;
+};
+
+type _Employee = {
+  employeeId: number;
+  role: string;
+};
+
+type EmployeePerson = _Person & _Employee;
+
+const employeePerson: EmployeePerson = {
+  name: "John",
+  age: 30,
+  employeeId: 1122,
+  role: "Manager",
+};
+
+// Example-2
+type Draggable = {
+  drag: () => void;
+};
+
+type Resizable = {
+  resize: () => void;
+};
+
+type UIWidget = Draggable & Resizable;
+
+let textBox: UIWidget = {
+  drag: () => {},
+  resize: () => {},
+};
+
+// Literal Types //
+// Example-1
+type FibonacciSeries10 = 1 | 2 | 3 | 5 | 8 | 13 | 21;
+let fibonacciSeries: FibonacciSeries10 = 21;
+
+// Example-2
+type Metric = "cm" | "inch";
+
+// Nullable Types //
+function greet(name: string | null | undefined) {
+  if (name) {
+    console.log(name.toUpperCase());
+  } else {
+    console.log("What is your name ?");
+  }
+}
+greet(undefined);
+greet("Mosh");
+
+// Optional Chaining //
+type Customer = {
+  birthday?: Date;
+};
+
+function getCustomer(id: number): Customer | null | undefined {
+  return id === 0 ? null : { birthday: new Date() };
+}
+
+let customer = getCustomer(1);
+// Optional property access operator
+console.log(customer?.birthday?.getFullYear());
+
+// Optional element access operator
+// customer?.[0]
+
+// Optional Call
+let log: any = null;
+log?.("a");
+
+// The Nullish Coaelscing Operator //
+let speed: number | null = null;
+let ride = {
+  // Falsy value (undefined, null, '', false, 0)
+
+  // Without Nullish coaelescing operator
+  // speed: speed !== null ? speed : 30,
+
+  // With Nullish coaelescing operator
+  speed: speed ?? 30,
+};
+console.log(ride.speed);
+
+// Type Assertions //
+/*
+let phone = <HTMLInputElement>document.getElementById("phone");
+// HTMLElement
+// HTMLInputElement
+phone.value;
+*/
+
+// The Unknown Type //
+/*
+const render = (document: unknown) => {
+  // Narrowing
+  if (document instanceof WordDocument) {
+    document.toUpperCase();
+  }
+  document.move();
+  document.fly();
+  document.whateverWeWant();
+}
+*/
+
+// The Never Type //
+function reject(message: string): never {
+  throw new Error(message);
+}
+
+function processEvents(): never {
+  while (true) {
+    // Read a message from a queue
+  }
+}
+
+// processEvents();
+reject("...");
+// console.log("HelloWorld!"); // unreacable code detected

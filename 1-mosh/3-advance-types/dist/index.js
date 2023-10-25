@@ -1,33 +1,61 @@
 "use strict";
-let sales = 123456789;
-let course = "Typescript";
-let is_published = true;
-let _sales = 123456789;
-let _course = "Typescript";
-let _is_published = true;
-let level;
-const message = (text) => {
-    console.log(text);
+var _a;
+let employee = {
+    id: 1,
+    name: "Mosh",
+    retire: (date) => {
+        console.log(date);
+    },
 };
-message("HelloWord!");
-let numbers = [1, 2, 3];
-let _number = [];
-_number[0] = 1;
-_number[1] = 2;
-let user = [1, "Mosh"];
-let mySize = "M";
-console.log(mySize);
-const myIncome = (income) => {
-    console.log(`My income is ${income}`);
-};
-const calculateTax = (income, taxyear = 2022) => {
-    if (taxyear <= 2022) {
-        return income * 1.2;
+function kgToLbs(weight) {
+    if (typeof weight === "number") {
+        return weight * 2.2;
     }
     else {
-        return income * 1.3;
+        return parseInt(weight) * 2.2;
     }
+}
+console.log(kgToLbs(10));
+console.log(kgToLbs("10kg"));
+const employeePerson = {
+    name: "John",
+    age: 30,
+    employeeId: 1122,
+    role: "Manager",
 };
-console.log("My tax is", calculateTax(10000));
-console.log("My tax is", calculateTax(10000, 2023));
+let textBox = {
+    drag: () => { },
+    resize: () => { },
+};
+let fibonacciSeries = 21;
+function greet(name) {
+    if (name) {
+        console.log(name.toUpperCase());
+    }
+    else {
+        console.log("What is your name ?");
+    }
+}
+greet(undefined);
+greet("Mosh");
+function getCustomer(id) {
+    return id === 0 ? null : { birthday: new Date() };
+}
+let customer = getCustomer(1);
+console.log((_a = customer === null || customer === void 0 ? void 0 : customer.birthday) === null || _a === void 0 ? void 0 : _a.getFullYear());
+let log = null;
+log === null || log === void 0 ? void 0 : log("a");
+let speed = null;
+let ride = {
+    speed: speed !== null && speed !== void 0 ? speed : 30,
+};
+console.log(ride.speed);
+function reject(message) {
+    throw new Error(message);
+}
+function processEvents() {
+    while (true) {
+    }
+}
+reject("...");
 //# sourceMappingURL=index.js.map

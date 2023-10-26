@@ -146,6 +146,14 @@ class Person {
     return this.firstName + " " + this.lastName;
   }
 
+  // private walk(): string {
+  //   return "Walking";
+  // }
+
+  // protected walk(): string {
+  //   return "Walking";
+  // }
+
   walk(): string {
     return "Walking";
   }
